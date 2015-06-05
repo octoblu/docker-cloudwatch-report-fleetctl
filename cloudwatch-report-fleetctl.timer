@@ -7,3 +7,6 @@ OnUnitActiveSec=1 minute
 
 [Install]
 WantedBy=timers.target
+
+[X-Fleet]
+X-ConditionMachineOf=cloudwatch-report-fleetctl.service
