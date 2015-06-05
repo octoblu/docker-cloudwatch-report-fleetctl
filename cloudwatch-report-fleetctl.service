@@ -1,0 +1,16 @@
+[Unit]
+Description=Report CloudWatch Fleetctl Metrics to AWS
+Requires=docker.service
+
+[Service]
+Type=simple
+TimeoutStartSec=50
+ExecStartPre=-/usr/bin/docker kill cloudwatch-report-fleetctl
+ExecStartPre=-/usr/bin/docker rm cloudwatch-report-fleetctl
+ExecStartPre=/usr/bin/docker pull octoblu/cloudwatch-report-fleetctl
+ExecStart=/usr/bin/docker run \
+  --rm \
+  --name cloudwatch-report-fleetctl \
+  --volume /var/run/fleet.sock:/var/run/fleet.sock \
+  --env S3_DEFAULT_REGION=$(/usr/bin/etcdctl get aws/region) \
+  octoblu/cloudwatch-report-fleetctl:devel
