@@ -7,10 +7,9 @@ Type=simple
 TimeoutStartSec=50
 ExecStartPre=-/usr/bin/docker kill cloudwatch-report-fleetctl
 ExecStartPre=-/usr/bin/docker rm cloudwatch-report-fleetctl
-ExecStartPre=/usr/bin/docker pull octoblu/cloudwatch-report-fleetctl
-ExecStart=/usr/bin/docker run \
-  --rm \
+ExecStartPre=/usr/bin/docker pull octoblu/cloudwatch-report-fleet:latest
+ExecStart=/bin/sh -c '/usr/bin/docker run \
   --name cloudwatch-report-fleetctl \
   --volume /var/run/fleet.sock:/var/run/fleet.sock \
-  --env S3_DEFAULT_REGION=$(/usr/bin/etcdctl get aws/region) \
-  octoblu/cloudwatch-report-fleetctl:devel
+  --env AWS_DEFAULT_REGION=$(/usr/bin/etcdctl get aws/region) \
+  octoblu/cloudwatch-report-fleet:latest'
