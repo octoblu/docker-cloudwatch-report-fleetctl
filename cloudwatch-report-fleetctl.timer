@@ -2,11 +2,11 @@
 Description=Run CloudWatch report fleetctl every minute
 
 [Timer]
-OnStartupSec=3 minutes
+OnBootSec=3 minutes
 OnUnitActiveSec=1 minute
 
 [Install]
 WantedBy=timers.target
 
 [X-Fleet]
-Global=true
+X-ConditionMachineOf=cloudwatch-report-fleetctl.service
