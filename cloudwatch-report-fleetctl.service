@@ -10,6 +10,7 @@ ExecStartPre=-/usr/bin/docker rm cloudwatch-report-fleetctl
 ExecStartPre=/usr/bin/docker pull octoblu/cloudwatch-report-fleet:latest
 ExecStart=/bin/sh -c '/usr/bin/docker run \
   --name cloudwatch-report-fleetctl \
+  --memory=200m \
   --volume /var/run/fleet.sock:/var/run/fleet.sock \
   --env AWS_DEFAULT_REGION=$(/usr/bin/etcdctl get aws/region) \
   --env AWS_ACCESS_KEY_ID=$(/usr/bin/etcdctl get aws/access_key_id) \
